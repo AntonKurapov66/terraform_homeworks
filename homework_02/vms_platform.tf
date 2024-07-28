@@ -1,4 +1,4 @@
-variable "vm_web_name" {
+/*variable "vm_web_name" {
   type    = string
   default = "netology-develop-platform-web"
 }
@@ -67,29 +67,35 @@ variable "vm_db_preemptible" {
   type    = bool
   default = true
 }
+*/
 
-/*variable "vmrunners" {
-  type = list(object({
-    name            = string
-    cores           = number
-    core_fraction   = number
-    memory          = number
-    platform        = string
-    preemptible     = bool
-    zone            = string
+variable "metadata" {
+  type = map(string)
+  default = {
+    serial-port-enable = "1"
+    ssh-keys           = "ubuntu:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPcns3D9BD/vDARVdJLqH8OZEj+ZGUAouIysD7++VFIi admin@devops-netology"
+  }
+}
+
+variable "vms_resources" {
+  type = map(object({
+    cores         = number
+    core_fraction = number
+    memory        = number
+    platform      = string
+    preemptible   = bool
+    zone          = string
   }))
-  default = [
-    {
-      name            = "netology-develop-platform-web"
+  default = {
+    web = {
       cores           = 2
       core_fraction   = 20
       memory          = 1
       platform        = "standard-v3"
       preemptible     = true
       zone            = "ru-central1-a"
-    },
-    {
-      name            = "netology-develop-platform-db"
+    }
+    db = {
       cores           = 2
       core_fraction   = 20
       memory          = 2
@@ -97,7 +103,5 @@ variable "vm_db_preemptible" {
       preemptible     = true
       zone            = "ru-central1-b"
     }
-  ]
+  }
 }
-*/ 
-
