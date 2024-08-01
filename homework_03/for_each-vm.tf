@@ -7,8 +7,8 @@ variable "each_vm" {
     preemptible = bool
   }))
   default = [
-    { vm_name = "main", cores = 2, memory = 2,  size = 50, preemptible = true },
-    { vm_name = "replica", cores = 2, memory = 1,  size = 20, preemptible = true }
+    { vm_name = "main", cores = 4, memory = 4,  size = 50, preemptible = true },
+    { vm_name = "replica", cores = 2, memory = 2,  size = 20, preemptible = true }
   ]
 }
 resource "yandex_compute_instance" "db" {
@@ -18,6 +18,7 @@ resource "yandex_compute_instance" "db" {
   resources {
     cores  = each.value.cores
     memory = each.value.memory
+
   }
   boot_disk {
     initialize_params {
