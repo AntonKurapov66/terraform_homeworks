@@ -1,21 +1,3 @@
-variable "vm_resource" {
-  type = list(object({
-    cores         = number
-    core_fraction = number
-    memory        = number
-    platform      = string
-    preemptible   = bool
-  }))
-  default = [
-    {
-      cores         = 2
-      core_fraction = 20
-      memory        = 1
-      platform      = "standard-v3"
-      preemptible   = false
-    }
-  ]
-}
 resource "yandex_compute_instance" "web" {
   count = 2
   name  = "web-${count.index + 1}"
@@ -31,14 +13,16 @@ resource "yandex_compute_instance" "web" {
     }
   }
   network_interface {
-    subnet_id = yandex_vpc_subnet.develop.id
-    nat       = true
+    subnet_id          = yandex_vpc_subnet.develop.id
+    nat                = var.vm_resource[0].nat
     security_group_ids = [yandex_vpc_security_group.example.id]
   }
+  
   metadata = {
-    serial-port-enable = "1"
-    ssh-keys = local.ssh-key.default
+    ssh-keys = local.ssh-key
   }
+
+
   scheduling_policy {
     preemptible = var.vm_resource[0].preemptible
   }

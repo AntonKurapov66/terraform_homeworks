@@ -1,16 +1,3 @@
-variable "each_vm" {
-  type = list(object({
-    vm_name     = string
-    cores       = number
-    memory      = number
-    size        = number
-    preemptible = bool
-  }))
-  default = [
-    { vm_name = "main", cores = 4, memory = 4,  size = 50, preemptible = true },
-    { vm_name = "replica", cores = 2, memory = 2,  size = 20, preemptible = true }
-  ]
-}
 resource "yandex_compute_instance" "db" {
   for_each = { for vm in var.each_vm : vm.vm_name => vm }
 
@@ -28,12 +15,12 @@ resource "yandex_compute_instance" "db" {
   }
   network_interface {
     subnet_id = yandex_vpc_subnet.develop.id
-    nat       = true
+    nat       = each.value.nat
   }
   metadata = {
-    serial-port-enable = "1"
-    ssh-keys = local.ssh-key.default
+    ssh-keys = local.ssh-key
   }
+
   scheduling_policy {
     preemptible = each.value.preemptible
   }
