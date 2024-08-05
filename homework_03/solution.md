@@ -50,3 +50,35 @@ variable "each_vm" {
 
 
 ссылка на репозиторий с кодом https://github.com/AntonKurapov66/terraform_homeworks/tree/main/homework_03 
+
+* исправление 5-ого задания 
+
+```json
+  web_and_db_list = [
+  [
+    {
+      "fqdn" = "fhmtgifnc0tuh2re0m2q.auto.internal"
+      "id" = "fhmtgifnc0tuh2re0m2q"
+      "name" = "web-1"
+    },
+    {
+      "fqdn" = "fhmcsdfd9jj0qg0q8l70.auto.internal"
+      "id" = "fhmcsdfd9jj0qg0q8l70"
+      "name" = "web-2"
+    },
+  ],
+  [
+    {
+      "fqdn" = "fhmeth6b20ej49qjdklf.auto.internal"
+      "id" = "fhmeth6b20ej49qjdklf"
+      "name" = "main"
+    },
+    {
+      "fqdn" = "fhm9it18qeopnrrvb2u8.auto.internal"
+      "id" = "fhm9it18qeopnrrvb2u8"
+      "name" = "replica"
+    },
+  ],
+]
+
+```
